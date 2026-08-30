@@ -11,7 +11,6 @@
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
 
-
 .collections-container {
   position: relative;
   width: 90%;
@@ -159,8 +158,7 @@
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  transform: rotate(calc(var(--i) * 45deg))
-    translateY(-28px);
+  transform: rotate(calc(var(--i) * 45deg)) translateY(-28px);
   transform-origin: center;
 }
 
@@ -203,4 +201,244 @@
   .carousel-arrow-right {
     right: -15px;
   }
+}
+
+/* =================================
+   TOP SELLERS
+================================= */
+
+.top-sellers-section {
+  width: 90%;
+  margin: 80px auto;
+}
+
+.top-sellers-list {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 35px 30px;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/* =================================
+   TOP SELLER ITEM
+================================= */
+
+.top-seller-item {
+  display: flex;
+
+  align-items: center;
+
+  min-width: 0;
+
+  margin: 0;
+
+  padding: 0;
+}
+
+/* =================================
+   NUMBER
+================================= */
+
+.top-seller-number {
+  flex-shrink: 0;
+
+  width: 25px;
+
+  margin-right: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #777;
+
+  text-align: left;
+}
+
+/* =================================
+   AUTHOR IMAGE
+================================= */
+
+.top-seller-image-link {
+  display: block;
+
+  flex-shrink: 0;
+
+  width: 60px;
+  height: 60px;
+
+  margin-right: 12px;
+}
+
+.top-seller-image {
+  display: block;
+
+  width: 60px;
+  height: 60px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+}
+
+/* =================================
+   AUTHOR INFORMATION
+================================= */
+
+.top-seller-info {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  min-width: 0;
+}
+
+.top-seller-name {
+  display: block;
+
+  max-width: 100%;
+
+  margin: 0 0 5px;
+
+  color: #222;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.top-seller-name:hover {
+  text-decoration: none;
+}
+
+.top-seller-price {
+  display: block;
+
+  color: #777;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+}
+
+/* =================================
+   SKELETON
+================================= */
+
+.skeleton-seller-image {
+  flex-shrink: 0;
+
+  width: 60px;
+  height: 60px;
+
+  margin-right: 12px;
+
+  border-radius: 50%;
+
+  background: #e5e5e5;
+
+  animation: skeleton-loading 1.2s infinite ease-in-out;
+}
+
+.skeleton-seller-name {
+  width: 90px;
+  height: 16px;
+
+  margin-bottom: 7px;
+
+  border-radius: 4px;
+
+  background: #e5e5e5;
+
+  animation: skeleton-loading 1.2s infinite ease-in-out;
+}
+
+.skeleton-seller-price {
+  width: 55px;
+  height: 13px;
+
+  border-radius: 4px;
+
+  background: #e5e5e5;
+
+  animation: skeleton-loading 1.2s infinite ease-in-out;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1024px) {
+  .top-sellers-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .top-sellers-section {
+    width: 90%;
+  }
+
+  .top-sellers-list {
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px 20px;
+  }
+
+  .top-seller-image-link,
+  .top-seller-image,
+  .skeleton-seller-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .top-seller-name {
+    font-size: 14px;
+  }
+
+  .top-seller-price {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-sellers-section {
+    width: 85%;
+  }
+
+  .top-sellers-list {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+}
+
+.top-seller-image-link,
+.top-seller-name {
+  position: relative;
+  z-index: 5;
+  pointer-events: auto;
+  cursor: pointer;
 }
