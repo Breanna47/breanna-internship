@@ -95,9 +95,11 @@ const ExploreItems = () => {
       .catch((error) => {
         console.error("Explore API error:", error);
       })
-      .finally(() => {
-        setLoading(false);
-      });
+    .finally(() => {
+  setTimeout(() => {
+    setLoading(false);
+  }, 1500);
+});
   }, []);
 
   useEffect(() => {

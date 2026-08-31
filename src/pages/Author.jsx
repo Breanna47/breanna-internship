@@ -10,7 +10,6 @@ const Author = () => {
   const [author, setAuthor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [following, setFollowing] = useState(false);
-
   const [followerCount, setFollowerCount] = useState(0);
 
   useEffect(() => {
@@ -31,9 +30,12 @@ const Author = () => {
         console.error("Author API error:", error);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       });
   }, [id]);
+
   const handleFollow = () => {
     if (following) {
       setFollowerCount((count) => Math.max(0, count - 1));
@@ -45,7 +47,70 @@ const Author = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div id="wrapper">
+        <div className="no-bottom no-top" id="content">
+          <div id="top"></div>
+
+          <section
+            id="profile_banner"
+            aria-label="section"
+            className="text-light author-skeleton-banner"
+          ></section>
+
+          <section aria-label="section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar author-profile-skeleton">
+                        <div className="author-skeleton-avatar"></div>
+
+                        <div className="profile_name">
+                          <div className="author-skeleton-name"></div>
+                          <div className="author-skeleton-username"></div>
+                          <div className="author-skeleton-wallet"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="author-skeleton-followers"></div>
+                        <div className="author-skeleton-button"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-12">
+                  <div className="author-items-skeleton-grid">
+                    {Array.from({ length: 8 }).map((_, index) => (
+                      <div className="author-item-skeleton-card" key={index}>
+                        <div className="author-item-skeleton-top">
+                          <div className="author-item-skeleton-avatar"></div>
+                          <div className="author-item-skeleton-timer"></div>
+                        </div>
+
+                        <div className="author-item-skeleton-image"></div>
+
+                        <div className="author-item-skeleton-title"></div>
+
+                        <div className="author-item-skeleton-bottom">
+                          <div className="author-item-skeleton-price"></div>
+                          <div className="author-item-skeleton-likes"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    );
   }
 
   if (!author) {
