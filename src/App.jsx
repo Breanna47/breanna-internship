@@ -15,9 +15,6 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
-
-
 const skeletonCards = Array.from({ length: 4 });
 function PrevArrow({ onClick }) {
   return (
@@ -107,11 +104,11 @@ function App() {
   const [topSellersLoading, setTopSellersLoading] = useState(true);
 
   useEffect(() => {
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
-}, []);
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   useEffect(() => {
     axios
@@ -194,195 +191,184 @@ function App() {
     ],
   };
 
- const HomeContent = () => (
-  <>
-    {/* 
+  const HomeContent = () => (
+    <>
+      {/* 
         LANDING
      */}
-    <div data-aos="fade-up">
-      <Landing />
-    </div>
+      <div data-aos="fade-up">
+        <Landing />
+      </div>
 
-    {/* 
+      {/* 
         LANDING INTRO
      */}
-    <div data-aos="fade-up">
-      <LandingIntro />
-    </div>
+      <div data-aos="fade-up">
+        <LandingIntro />
+      </div>
 
-    {/* 
+      {/* 
         HOT COLLECTIONS
      */}
-    <div data-aos="fade-up">
-      <div className="section-title">Hot Collections</div>
-
-      <div className="collections-container">
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <Slider {...settings}>
-            {collections.map((collection) => (
-              <div key={collection.id}>
-                <div className="collection-card">
-                  <div className="nft-image-wrapper">
-                    <img
-                      className="nft-image"
-                      src={collection.nftImage}
-                      alt={collection.title}
-                    />
-                  </div>
-
-                  <img
-                    className="author-image"
-                    src={collection.authorImage}
-                    alt="Author"
-                  />
-
-                  <h2>{collection.title}</h2>
-                </div>
-              </div>
-            ))}
-          </Slider>
-        )}
-      </div>
-    </div>
-
-    {/* 
-        NEW ITEMS
-     */}
-    <div data-aos="fade-up">
-      <section className="new-items-section">
-        <div className="section-title">New Items</div>
+      <div data-aos="fade-up">
+        <div className="section-title">Hot Collections</div>
 
         <div className="collections-container">
-          <Slider {...settings}>
-            {newItemsLoading
-              ? skeletonCards.map((_, index) => (
-                  <div key={index}>
-                    <div className="collection-card skeleton-card">
-                      <div className="skeleton-nft"></div>
-                      <div className="skeleton-author"></div>
-                      <div className="skeleton-title"></div>
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <Slider {...settings}>
+              {collections.map((collection) => (
+                <div key={collection.id}>
+                  <div className="collection-card">
+                    <div className="nft-image-wrapper">
+                      <img
+                        className="nft-image"
+                        src={collection.nftImage}
+                        alt={collection.title}
+                      />
                     </div>
+
+                    <img
+                      className="author-image"
+                      src={collection.authorImage}
+                      alt="Author"
+                    />
+
+                    <h2>{collection.title}</h2>
                   </div>
-                ))
-              : newItems.map((item) => (
-                  <div key={item.id}>
-                    <div className="collection-card new-item-card">
-                      <div className="new-item-top">
-                        <img
-                          className="new-item-author"
-                          src={item.authorImage}
-                          alt="Author"
-                        />
-
-                        <div className="countdown-wrapper">
-                          <CountdownTimer expiryDate={item.expiryDate} />
-                        </div>
-                      </div>
-
-                      <div className="nft-image-wrapper">
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <img
-                            className="nft-image"
-                            src={item.nftImage}
-                            alt={item.title}
-                          />
-                        </Link>
-                      </div>
-
-                      <div className="new-item-info">
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <h2>{item.title}</h2>
-                        </Link>
-
-                        <div className="new-item-bottom-row">
-                          <p className="item-price">
-                            {item.price} ETH
-                          </p>
-
-                          <p className="item-likes">
-                            ♥ {item.likes}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-          </Slider>
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
-      </section>
-    </div>
+      </div>
 
-    {/* 
+      {/* 
+        NEW ITEMS
+     */}
+      <div data-aos="fade-up">
+        <section className="new-items-section">
+          <div className="section-title">New Items</div>
+
+          <div className="collections-container">
+            <Slider {...settings}>
+              {newItemsLoading
+                ? skeletonCards.map((_, index) => (
+                    <div key={index}>
+                      <div className="collection-card skeleton-card">
+                        <div className="skeleton-nft"></div>
+                        <div className="skeleton-author"></div>
+                        <div className="skeleton-title"></div>
+                      </div>
+                    </div>
+                  ))
+                : newItems.map((item) => (
+                    <div key={item.id}>
+                      <div className="collection-card new-item-card">
+                        <div className="new-item-top">
+                          <img
+                            className="new-item-author"
+                            src={item.authorImage}
+                            alt="Author"
+                          />
+
+                          <div className="countdown-wrapper">
+                            <CountdownTimer expiryDate={item.expiryDate} />
+                          </div>
+                        </div>
+
+                        <div className="nft-image-wrapper">
+                          <Link to={`/item-details/${item.nftId}`}>
+                            <img
+                              className="nft-image"
+                              src={item.nftImage}
+                              alt={item.title}
+                            />
+                          </Link>
+                        </div>
+
+                        <div className="new-item-info">
+                          <Link to={`/item-details/${item.nftId}`}>
+                            <h2>{item.title}</h2>
+                          </Link>
+
+                          <div className="new-item-bottom-row">
+                            <p className="item-price">{item.price} ETH</p>
+
+                            <p className="item-likes">♥ {item.likes}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+            </Slider>
+          </div>
+        </section>
+      </div>
+
+      {/* 
         TOP SELLERS
      */}
-    <div data-aos="fade-up">
-      <section className="top-sellers-section">
-        <div className="section-title">Top Sellers</div>
+      <div data-aos="fade-up">
+        <section className="top-sellers-section">
+          <div className="section-title">Top Sellers</div>
 
-        <ol className="top-sellers-list">
-          {topSellersLoading
-            ? Array.from({ length: 12 }).map((_, index) => (
-                <li className="top-seller-item" key={index}>
-                  <span className="top-seller-number">
-                    {index + 1}
-                  </span>
+          <ol className="top-sellers-list">
+            {topSellersLoading
+              ? Array.from({ length: 12 }).map((_, index) => (
+                  <li className="top-seller-item" key={index}>
+                    <span className="top-seller-number">{index + 1}</span>
 
-                  <div className="top-seller-image skeleton-seller-image"></div>
+                    <div className="top-seller-image skeleton-seller-image"></div>
 
-                  <div className="top-seller-info">
-                    <div className="skeleton-seller-name"></div>
-                    <div className="skeleton-seller-price"></div>
-                  </div>
-                </li>
-              ))
-            : topSellers.slice(0, 12).map((seller, index) => (
-                <li
-                  className="top-seller-item"
-                  key={seller.id}
-                >
-                  <span className="top-seller-number">
-                    {index + 1}
-                  </span>
+                    <div className="top-seller-info">
+                      <div className="skeleton-seller-name"></div>
+                      <div className="skeleton-seller-price"></div>
+                    </div>
+                  </li>
+                ))
+              : topSellers.slice(0, 12).map((seller, index) => (
+                  <li className="top-seller-item" key={seller.id}>
+                    <span className="top-seller-number">{index + 1}</span>
 
-                  <Link
-                    to={`/author/${seller.authorId}`}
-                    className="top-seller-image-link"
-                  >
-                    <img
-                      className="top-seller-image"
-                      src={seller.authorImage}
-                      alt={seller.authorName}
-                    />
-                  </Link>
-
-                  <div className="top-seller-info">
                     <Link
                       to={`/author/${seller.authorId}`}
-                      className="top-seller-name"
+                      className="top-seller-image-link"
                     >
-                      {seller.authorName}
+                      <img
+                        className="top-seller-image"
+                        src={seller.authorImage}
+                        alt={seller.authorName}
+                      />
                     </Link>
 
-                    <span className="top-seller-price">
-                      {seller.price} ETH
-                    </span>
-                  </div>
-                </li>
-              ))}
-        </ol>
-      </section>
-    </div>
+                    <div className="top-seller-info">
+                      <Link
+                        to={`/author/${seller.authorId}`}
+                        className="top-seller-name"
+                      >
+                        {seller.authorName}
+                      </Link>
 
-    {/* 
+                      <span className="top-seller-price">
+                        {seller.price} ETH
+                      </span>
+                    </div>
+                  </li>
+                ))}
+          </ol>
+        </section>
+      </div>
+
+      {/* 
         BROWSE BY CATEGORY
      */}
-    <div data-aos="fade-up">
-      <BrowseByCategory />
-    </div>
-  </>
-);
+      <div data-aos="fade-up">
+        <BrowseByCategory />
+      </div>
+    </>
+  );
 
   return (
     <Router>
