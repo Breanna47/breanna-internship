@@ -1,7 +1,9 @@
-import Landing from "./components/home/Landing";
-import LandingIntro from "./components/home/LandingIntro";
-import BrowseByCategory from "./components/home/BrowseByCategory";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+} from "react-router-dom";
 import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
@@ -15,9 +17,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
-
 const skeletonCards = Array.from({ length: 4 });
+
 function PrevArrow({ onClick }) {
   return (
     <button
@@ -57,6 +58,7 @@ function LoadingSpinner() {
     </div>
   );
 }
+
 function getTimeLeft(expiryDate) {
   const difference = Number(expiryDate) - Date.now();
 
@@ -78,26 +80,6 @@ function getTimeLeft(expiryDate) {
 }
 
 function CountdownTimer({ expiryDate }) {
-  const getTimeLeft = (date) => {
-    const difference = Number(date) - Date.now();
-
-    if (!date || difference <= 0) {
-      return {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      };
-    }
-
-    return {
-      hours: Math.floor(difference / (1000 * 60 * 60)),
-      minutes: Math.floor(
-        (difference % (1000 * 60 * 60)) / (1000 * 60),
-      ),
-      seconds: Math.floor((difference % (1000 * 60)) / 1000),
-    };
-  };
-
   const [timeLeft, setTimeLeft] = useState(() =>
     getTimeLeft(expiryDate),
   );
@@ -129,16 +111,16 @@ function App() {
   const [topSellers, setTopSellers] = useState([]);
   const [topSellersLoading, setTopSellersLoading] = useState(true);
 
-useEffect(() => {
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
-}, []);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
-useEffect(() => {
-  AOS.refresh();
-}, [collections, newItems, topSellers]);
+  useEffect(() => {
+    AOS.refresh();
+  }, [collections, newItems, topSellers]);
 
   useEffect(() => {
     axios
@@ -223,23 +205,6 @@ useEffect(() => {
 
   const HomeContent = () => (
     <>
-      {/* 
-        LANDING
-     */}
-      <div data-aos="fade-up">
-        <Landing />
-      </div>
-
-      {/* 
-        LANDING INTRO
-     */}
-      <div data-aos="fade-up">
-        <LandingIntro />
-      </div>
-
-      {/* 
-        HOT COLLECTIONS
-     */}
       <div data-aos="fade-up">
         <div className="section-title">Hot Collections</div>
 
@@ -274,9 +239,6 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* 
-        NEW ITEMS
-     */}
       <div data-aos="fade-up">
         <section className="new-items-section">
           <div className="section-title">New Items</div>
@@ -304,12 +266,16 @@ useEffect(() => {
                           />
 
                           <div className="countdown-wrapper">
-                            <CountdownTimer expiryDate={item.expiryDate} />
+                            <CountdownTimer
+                              expiryDate={item.expiryDate}
+                            />
                           </div>
                         </div>
 
                         <div className="nft-image-wrapper">
-                          <Link to={`/item-details/${item.nftId}`}>
+                          <Link
+                            to={`/item-details/${item.nftId}`}
+                          >
                             <img
                               className="nft-image"
                               src={item.nftImage}
@@ -319,14 +285,20 @@ useEffect(() => {
                         </div>
 
                         <div className="new-item-info">
-                          <Link to={`/item-details/${item.nftId}`}>
+                          <Link
+                            to={`/item-details/${item.nftId}`}
+                          >
                             <h2>{item.title}</h2>
                           </Link>
 
                           <div className="new-item-bottom-row">
-                            <p className="item-price">{item.price} ETH</p>
+                            <p className="item-price">
+                              {item.price} ETH
+                            </p>
 
-                            <p className="item-likes">♥ {item.likes}</p>
+                            <p className="item-likes">
+                              ♥ {item.likes}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -337,9 +309,6 @@ useEffect(() => {
         </section>
       </div>
 
-      {/* 
-        TOP SELLERS
-     */}
       <div data-aos="fade-up">
         <section className="top-sellers-section">
           <div className="section-title">Top Sellers</div>
@@ -347,8 +316,13 @@ useEffect(() => {
           <ol className="top-sellers-list">
             {topSellersLoading
               ? Array.from({ length: 12 }).map((_, index) => (
-                  <li className="top-seller-item" key={index}>
-                    <span className="top-seller-number">{index + 1}</span>
+                  <li
+                    className="top-seller-item"
+                    key={index}
+                  >
+                    <span className="top-seller-number">
+                      {index + 1}
+                    </span>
 
                     <div className="top-seller-image skeleton-seller-image"></div>
 
@@ -358,44 +332,44 @@ useEffect(() => {
                     </div>
                   </li>
                 ))
-              : topSellers.slice(0, 12).map((seller, index) => (
-                  <li className="top-seller-item" key={seller.id}>
-                    <span className="top-seller-number">{index + 1}</span>
-
-                    <Link
-                      to={`/author/${seller.authorId}`}
-                      className="top-seller-image-link"
+              : topSellers
+                  .slice(0, 12)
+                  .map((seller, index) => (
+                    <li
+                      className="top-seller-item"
+                      key={seller.id}
                     >
-                      <img
-                        className="top-seller-image"
-                        src={seller.authorImage}
-                        alt={seller.authorName}
-                      />
-                    </Link>
+                      <span className="top-seller-number">
+                        {index + 1}
+                      </span>
 
-                    <div className="top-seller-info">
                       <Link
                         to={`/author/${seller.authorId}`}
-                        className="top-seller-name"
+                        className="top-seller-image-link"
                       >
-                        {seller.authorName}
+                        <img
+                          className="top-seller-image"
+                          src={seller.authorImage}
+                          alt={seller.authorName}
+                        />
                       </Link>
 
-                      <span className="top-seller-price">
-                        {seller.price} ETH
-                      </span>
-                    </div>
-                  </li>
-                ))}
+                      <div className="top-seller-info">
+                        <Link
+                          to={`/author/${seller.authorId}`}
+                          className="top-seller-name"
+                        >
+                          {seller.authorName}
+                        </Link>
+
+                        <span className="top-seller-price">
+                          {seller.price} ETH
+                        </span>
+                      </div>
+                    </li>
+                  ))}
           </ol>
         </section>
-      </div>
-
-      {/* 
-        BROWSE BY CATEGORY
-     */}
-      <div data-aos="fade-up">
-        <BrowseByCategory />
       </div>
     </>
   );
@@ -410,7 +384,10 @@ useEffect(() => {
           <Route path="/explore" element={<Explore />} />
           <Route path="/author" element={<Author />} />
           <Route path="/author/:id" element={<Author />} />
-          <Route path="/item-details/:nftId" element={<ItemDetails />} />
+          <Route
+            path="/item-details/:nftId"
+            element={<ItemDetails />}
+          />
         </Routes>
       </main>
 
