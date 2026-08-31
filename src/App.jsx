@@ -15,6 +15,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+
+
 const skeletonCards = Array.from({ length: 4 });
 function PrevArrow({ onClick }) {
   return (
@@ -55,30 +57,54 @@ function LoadingSpinner() {
     </div>
   );
 }
+function getTimeLeft(expiryDate) {
+  const difference = Number(expiryDate) - Date.now();
+
+  if (!expiryDate || difference <= 0) {
+    return {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+
+  return {
+    hours: Math.floor(difference / (1000 * 60 * 60)),
+    minutes: Math.floor(
+      (difference % (1000 * 60 * 60)) / (1000 * 60),
+    ),
+    seconds: Math.floor((difference % (1000 * 60)) / 1000),
+  };
+}
 
 function CountdownTimer({ expiryDate }) {
-  const calculateTimeLeft = () => {
-    const difference = expiryDate - Date.now();
+  const getTimeLeft = (date) => {
+    const difference = Number(date) - Date.now();
 
-    if (difference <= 0) {
+    if (!date || difference <= 0) {
       return {
         hours: 0,
         minutes: 0,
         seconds: 0,
       };
     }
+
     return {
       hours: Math.floor(difference / (1000 * 60 * 60)),
-      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+      minutes: Math.floor(
+        (difference % (1000 * 60 * 60)) / (1000 * 60),
+      ),
       seconds: Math.floor((difference % (1000 * 60)) / 1000),
     };
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState(() =>
+    getTimeLeft(expiryDate),
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(getTimeLeft(expiryDate));
     }, 1000);
 
     return () => clearInterval(timer);
