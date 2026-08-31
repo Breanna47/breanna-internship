@@ -20,12 +20,12 @@ const Author = () => {
 
     axios
       .get(
-        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
+        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`,
       )
       .then((response) => {
         console.log("FULL AUTHOR API:", response.data);
         setAuthor(response.data);
-         setFollowerCount(Number(response.data.followers) || 0);
+        setFollowerCount(Number(response.data.followers) || 0);
       })
       .catch((error) => {
         console.error("Author API error:", error);
@@ -34,15 +34,15 @@ const Author = () => {
         setLoading(false);
       });
   }, [id]);
-const handleFollow = () => {
-  if (following) {
-    setFollowerCount((count) => Math.max(0, count - 1));
-    setFollowing(false);
-  } else {
-    setFollowerCount((count) => count + 1);
-    setFollowing(true);
-  }
-};
+  const handleFollow = () => {
+    if (following) {
+      setFollowerCount((count) => Math.max(0, count - 1));
+      setFollowing(false);
+    } else {
+      setFollowerCount((count) => count + 1);
+      setFollowing(true);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -71,10 +71,7 @@ const handleFollow = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img
-                        src={author.authorImage}
-                        alt={author.authorName}
-                      />
+                      <img src={author.authorImage} alt={author.authorName} />
 
                       <i className="fa fa-check"></i>
 
@@ -86,10 +83,7 @@ const handleFollow = () => {
                             @{author.tag}
                           </span>
 
-                          <span
-                            id="wallet"
-                            className="profile_wallet"
-                          >
+                          <span id="wallet" className="profile_wallet">
                             {author.address}
                           </span>
                         </h4>
@@ -99,9 +93,9 @@ const handleFollow = () => {
 
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                     <div className="profile_follower">
-  {followerCount} followers
-</div>
+                      <div className="profile_follower">
+                        {followerCount} followers
+                      </div>
 
                       <button
                         type="button"
@@ -119,7 +113,9 @@ const handleFollow = () => {
                 <div className="de_tab tab_simple">
                   <AuthorItems
                     authorId={id}
-                    items={author.nftCollection || author.items || author.nfts || []}
+                    items={
+                      author.nftCollection || author.items || author.nfts || []
+                    }
                   />
                 </div>
               </div>

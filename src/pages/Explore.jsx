@@ -108,12 +108,11 @@ const ExploreItems = () => {
   return (
     <>
       {/* EXPLORE BANNER */}
-     
-      <section className="explore-banner"
-      data-aos="fade-up">
-  <div className="explore-banner-bubbles"></div>
-  <h1>Explore</h1>
-</section>
+
+      <section className="explore-banner" data-aos="fade-up">
+        <div className="explore-banner-bubbles"></div>
+        <h1>Explore</h1>
+      </section>
 
       {/* SORT FILTER */}
       <div className="explore-filter" data-aos="fade-up">
