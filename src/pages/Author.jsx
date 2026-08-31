@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Author = () => {
@@ -9,18 +9,23 @@ const Author = () => {
 
   const [author, setAuthor] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [following, setFollowing] = useState(false);
+
+  const [followerCount, setFollowerCount] = useState(0);
 
   useEffect(() => {
+    if (!id) return;
+
+    setLoading(true);
+
     axios
       .get(
-        "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
+        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
       )
       .then((response) => {
-        const selectedAuthor = response.data.find(
-          (seller) => String(seller.authorId) === String(id)
-        );
-
-        setAuthor(selectedAuthor);
+        console.log("FULL AUTHOR API:", response.data);
+        setAuthor(response.data);
+         setFollowerCount(Number(response.data.followers) || 0);
       })
       .catch((error) => {
         console.error("Author API error:", error);
@@ -29,6 +34,15 @@ const Author = () => {
         setLoading(false);
       });
   }, [id]);
+const handleFollow = () => {
+  if (following) {
+    setFollowerCount((count) => Math.max(0, count - 1));
+    setFollowing(false);
+  } else {
+    setFollowerCount((count) => count + 1);
+    setFollowing(true);
+  }
+};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -47,7 +61,6 @@ const Author = () => {
           id="profile_banner"
           aria-label="section"
           className="text-light"
-          data-bgimage="url(images/author_banner.jpg) top"
           style={{ background: `url(${AuthorBanner}) top` }}
         ></section>
 
@@ -70,24 +83,15 @@ const Author = () => {
                           {author.authorName}
 
                           <span className="profile_username">
-                            @{author.authorName
-                              .toLowerCase()
-                              .replace(/\s+/g, "")}
+                            @{author.tag}
                           </span>
 
                           <span
                             id="wallet"
                             className="profile_wallet"
                           >
-                            Author ID: {author.authorId}
+                            {author.address}
                           </span>
-
-                          <button
-                            id="btn_copy"
-                            title="Copy Text"
-                          >
-                            Copy
-                          </button>
                         </h4>
                       </div>
                     </div>
@@ -95,13 +99,17 @@ const Author = () => {
 
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">
-                        {author.price} ETH
-                      </div>
+                     <div className="profile_follower">
+  {followerCount} followers
+</div>
 
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <button
+                        type="button"
+                        className="btn-main"
+                        onClick={handleFollow}
+                      >
+                        {following ? "Following" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -109,7 +117,10 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems authorId={id} />
+                  <AuthorItems
+                    authorId={id}
+                    items={author.nftCollection || author.items || author.nfts || []}
+                  />
                 </div>
               </div>
             </div>
@@ -121,4 +132,3 @@ const Author = () => {
 };
 
 export default Author;
-
