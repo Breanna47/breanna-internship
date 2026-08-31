@@ -1,3 +1,6 @@
+import Landing from "./components/home/Landing";
+import LandingIntro from "./components/home/LandingIntro";
+import BrowseByCategory from "./components/home/BrowseByCategory";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
@@ -9,6 +12,11 @@ import Slider from "react-slick";
 import Explore from "./pages/Explore";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+
+
 
 const skeletonCards = Array.from({ length: 4 });
 function PrevArrow({ onClick }) {
@@ -99,6 +107,13 @@ function App() {
   const [topSellersLoading, setTopSellersLoading] = useState(true);
 
   useEffect(() => {
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+}, []);
+
+  useEffect(() => {
     axios
       .get(
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
@@ -179,8 +194,26 @@ function App() {
     ],
   };
 
-  const HomeContent = () => (
-    <>
+ const HomeContent = () => (
+  <>
+    {/* 
+        LANDING
+     */}
+    <div data-aos="fade-up">
+      <Landing />
+    </div>
+
+    {/* 
+        LANDING INTRO
+     */}
+    <div data-aos="fade-up">
+      <LandingIntro />
+    </div>
+
+    {/* 
+        HOT COLLECTIONS
+     */}
+    <div data-aos="fade-up">
       <div className="section-title">Hot Collections</div>
 
       <div className="collections-container">
@@ -212,7 +245,12 @@ function App() {
           </Slider>
         )}
       </div>
+    </div>
 
+    {/* 
+        NEW ITEMS
+     */}
+    <div data-aos="fade-up">
       <section className="new-items-section">
         <div className="section-title">New Items</div>
 
@@ -244,20 +282,28 @@ function App() {
                       </div>
 
                       <div className="nft-image-wrapper">
-                        <img
-                          className="nft-image"
-                          src={item.nftImage}
-                          alt={item.title}
-                        />
+                        <Link to={`/item-details/${item.nftId}`}>
+                          <img
+                            className="nft-image"
+                            src={item.nftImage}
+                            alt={item.title}
+                          />
+                        </Link>
                       </div>
 
                       <div className="new-item-info">
-                        <h2>{item.title}</h2>
+                        <Link to={`/item-details/${item.nftId}`}>
+                          <h2>{item.title}</h2>
+                        </Link>
 
                         <div className="new-item-bottom-row">
-                          <p className="item-price">{item.price} ETH</p>
+                          <p className="item-price">
+                            {item.price} ETH
+                          </p>
 
-                          <p className="item-likes">♥ {item.likes}</p>
+                          <p className="item-likes">
+                            ♥ {item.likes}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -266,7 +312,12 @@ function App() {
           </Slider>
         </div>
       </section>
+    </div>
 
+    {/* 
+        TOP SELLERS
+     */}
+    <div data-aos="fade-up">
       <section className="top-sellers-section">
         <div className="section-title">Top Sellers</div>
 
@@ -274,7 +325,9 @@ function App() {
           {topSellersLoading
             ? Array.from({ length: 12 }).map((_, index) => (
                 <li className="top-seller-item" key={index}>
-                  <span className="top-seller-number">{index + 1}</span>
+                  <span className="top-seller-number">
+                    {index + 1}
+                  </span>
 
                   <div className="top-seller-image skeleton-seller-image"></div>
 
@@ -285,8 +338,13 @@ function App() {
                 </li>
               ))
             : topSellers.slice(0, 12).map((seller, index) => (
-                <li className="top-seller-item" key={seller.id}>
-                  <span className="top-seller-number">{index + 1}</span>
+                <li
+                  className="top-seller-item"
+                  key={seller.id}
+                >
+                  <span className="top-seller-number">
+                    {index + 1}
+                  </span>
 
                   <Link
                     to={`/author/${seller.authorId}`}
@@ -307,14 +365,24 @@ function App() {
                       {seller.authorName}
                     </Link>
 
-                    <span className="top-seller-price">{seller.price} ETH</span>
+                    <span className="top-seller-price">
+                      {seller.price} ETH
+                    </span>
                   </div>
                 </li>
               ))}
         </ol>
       </section>
-    </>
-  );
+    </div>
+
+    {/* 
+        BROWSE BY CATEGORY
+     */}
+    <div data-aos="fade-up">
+      <BrowseByCategory />
+    </div>
+  </>
+);
 
   return (
     <Router>
