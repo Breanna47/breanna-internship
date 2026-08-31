@@ -1,6 +1,4 @@
-import Home from "./pages/Home";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Explore from "./pages/Explore";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
@@ -8,10 +6,11 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-
+import Explore from "./pages/Explore";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+const skeletonCards = Array.from({ length: 4 });
 function PrevArrow({ onClick }) {
   return (
     <button
@@ -52,9 +51,52 @@ function LoadingSpinner() {
   );
 }
 
+function CountdownTimer({ expiryDate }) {
+  const calculateTimeLeft = () => {
+    const difference = expiryDate - Date.now();
+
+    if (difference <= 0) {
+      return {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
+    return {
+      hours: Math.floor(difference / (1000 * 60 * 60)),
+      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((difference % (1000 * 60)) / 1000),
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [expiryDate]);
+
+  return (
+    <div className="countdown-timer">
+      {String(timeLeft.hours).padStart(2, "0")}:
+      {String(timeLeft.minutes).padStart(2, "0")}:
+      {String(timeLeft.seconds).padStart(2, "0")}
+    </div>
+  );
+}
+
 function App() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
+
+const [newItems, setNewItems] = useState([]);
+const [newItemsLoading, setNewItemsLoading] = useState(true);
+
+const [topSellers, setTopSellers] = useState([]);
+const [topSellersLoading, setTopSellersLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -68,6 +110,23 @@ function App() {
       .catch((error) => {
         console.error(error);
         setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
+      )
+      .then((response) => {
+        console.log("New Items:", response.data);
+        setNewItems(response.data);
+      })
+      .catch((error) => {
+        console.error("New Items API error:", error);
+      })
+      .finally(() => {
+        setNewItemsLoading(false);
       });
   }, []);
 
@@ -103,54 +162,170 @@ function App() {
     ],
   };
 
-  return (
-    <Router>
-      <Nav />
+const HomeContent = () => (
+  <>
+    <div className="section-title">Hot Collections</div>
 
-      <main>
-        <h1>NFT Collections</h1>
+    <div className="collections-container">
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <Slider {...settings}>
+          {collections.map((collection) => (
+            <div key={collection.id}>
+              <div className="collection-card">
+                <div className="nft-image-wrapper">
+                  <img
+                    className="nft-image"
+                    src={collection.nftImage}
+                    alt={collection.title}
+                  />
+                </div>
 
-        <div className="collections-container">
-          {loading ? (
-            <LoadingSpinner />
-          ) : (
-            <Slider {...settings}>
-              {collections.map((collection) => (
-                <div key={collection.id}>
-                  <div className="collection-card">
+                <img
+                  className="author-image"
+                  src={collection.authorImage}
+                  alt="Author"
+                />
+
+                <h2>{collection.title}</h2>
+              </div>
+            </div>
+          ))}
+        </Slider>
+      )}
+    </div>
+
+    <section className="new-items-section">
+      <div className="section-title">New Items</div>
+
+      <div className="collections-container">
+        <Slider {...settings}>
+          {newItemsLoading
+            ? skeletonCards.map((_, index) => (
+                <div key={index}>
+                  <div className="collection-card skeleton-card">
+                    <div className="skeleton-nft"></div>
+                    <div className="skeleton-author"></div>
+                    <div className="skeleton-title"></div>
+                  </div>
+                </div>
+              ))
+            : newItems.map((item) => (
+                <div key={item.id}>
+                  <div className="collection-card new-item-card">
+                    <div className="new-item-top">
+                      <img
+                        className="new-item-author"
+                        src={item.authorImage}
+                        alt="Author"
+                      />
+
+                      <div className="countdown-wrapper">
+                        <CountdownTimer expiryDate={item.expiryDate} />
+                      </div>
+                    </div>
+
                     <div className="nft-image-wrapper">
                       <img
                         className="nft-image"
-                        src={collection.nftImage}
-                        alt={collection.title}
+                        src={item.nftImage}
+                        alt={item.title}
                       />
                     </div>
 
-                    <img
-                      className="author-image"
-                      src={collection.authorImage}
-                      alt="Author"
-                    />
+                    <div className="new-item-info">
+                      <h2>{item.title}</h2>
 
-                    <h2>{collection.title}</h2>
+                      <div className="new-item-bottom-row">
+                        <p className="item-price">
+                          {item.price} ETH
+                        </p>
+
+                        <p className="item-likes">
+                          ♥ {item.likes}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
-            </Slider>
-          )}
-        </div>
+        </Slider>
+      </div>
+    </section>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/author" element={<Author />} />
-          <Route path="/item-details" element={<ItemDetails />} />
-        </Routes>
-      </main>
+    <section className="top-sellers-section">
+      <div className="section-title">Top Sellers</div>
 
-      <Footer />
-    </Router>
-  );
+      <ol className="top-sellers-list">
+        {topSellersLoading
+          ? Array.from({ length: 12 }).map((_, index) => (
+              <li className="top-seller-item" key={index}>
+                <span className="top-seller-number">
+                  {index + 1}
+                </span>
+
+                <div className="top-seller-image skeleton-seller-image"></div>
+
+                <div className="top-seller-info">
+                  <div className="skeleton-seller-name"></div>
+                  <div className="skeleton-seller-price"></div>
+                </div>
+              </li>
+            ))
+          : topSellers.slice(0, 12).map((seller, index) => (
+              <li className="top-seller-item" key={seller.id}>
+                <span className="top-seller-number">
+                  {index + 1}
+                </span>
+
+                <Link
+                  to={`/author/${seller.authorId}`}
+                  className="top-seller-image-link"
+                >
+                  <img
+                    className="top-seller-image"
+                    src={seller.authorImage}
+                    alt={seller.authorName}
+                  />
+                </Link>
+
+                <div className="top-seller-info">
+                  <Link
+                    to={`/author/${seller.authorId}`}
+                    className="top-seller-name"
+                  >
+                    {seller.authorName}
+                  </Link>
+
+                  <span className="top-seller-price">
+                    {seller.price} ETH
+                  </span>
+                </div>
+              </li>
+            ))}
+      </ol>
+    </section>
+  </>
+);
+
+return (
+  <Router>
+    <Nav />
+
+    <main>
+      <Routes>
+        <Route path="/" element={<HomeContent />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/author" element={<Author />} />
+        <Route path="/author/:id" element={<Author />} />
+        <Route path="/item-details" element={<ItemDetails />} />
+      </Routes>
+    </main>
+
+    <Footer />
+  </Router>
+);
 }
 
 export default App;
