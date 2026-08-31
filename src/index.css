@@ -11,17 +11,14 @@
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
 
-
 /* =================================
    COLLECTIONS CONTAINER
 ================================= */
-
 .collections-container {
   position: relative;
   width: 90%;
   margin: 50px auto;
 }
-
 
 /* =================================
    COLLECTION CARD
@@ -37,7 +34,6 @@
   text-align: center;
   background: white;
 }
-
 
 /* =================================
    NFT IMAGE
@@ -61,7 +57,6 @@
 .collection-card:hover .nft-image {
   transform: scale(1.03);
 }
-
 
 /* =================================
    GLOSSY SHIMMER
@@ -100,7 +95,6 @@
   }
 }
 
-
 /* =================================
    AUTHOR IMAGE
 ================================= */
@@ -117,7 +111,6 @@
   z-index: 2;
 }
 
-
 /* =================================
    COLLECTION TITLE
 ================================= */
@@ -127,7 +120,6 @@
   font-weight: 700;
   margin: 10px 0;
 }
-
 
 /* =================================
    CAROUSEL ARROWS
@@ -167,7 +159,6 @@
 .carousel-arrow-right {
   right: -20px;
 }
-
 
 /* =================================
    PURPLE LOADING INDICATOR
@@ -216,7 +207,6 @@
   }
 }
 
-
 /* =================================
    RESPONSIVE CAROUSEL
 ================================= */
@@ -250,6 +240,70 @@
   }
 }
 
+/* =================================
+   EXPLORE PAGE
+================================= */
+
+.explore-filter {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* =================================
+   EXPLORE GRID
+================================= */
+
+.explore-grid {
+  width: 100%;
+
+  display: grid !important;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 30px 24px;
+
+  margin: 0;
+  padding: 0;
+}
+
+/* =================================
+   EXPLORE CARD
+================================= */
+
+.explore-card {
+  width: 100% !important;
+  min-width: 0;
+
+  display: block !important;
+
+  box-sizing: border-box;
+}
+
+.explore-card .nft__item {
+  width: 100%;
+
+  margin: 0;
+
+  box-sizing: border-box;
+}
+
+/* NFT picture */
+
+.explore-card .nft__item_wrap {
+  width: 100%;
+}
+
+.explore-card .nft__item_preview {
+  display: block;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  height: auto;
+
+  object-fit: cover;
+}
 
 /* =================================
    NEW ITEMS SECTION
@@ -260,7 +314,6 @@
   margin-top: 80px;
   margin-bottom: 80px;
 }
-
 
 /* =================================
    NEW ITEM CARD
@@ -284,7 +337,6 @@
   overflow: visible;
 }
 
-
 /* =================================
    NEW ITEM TOP AREA
 ================================= */
@@ -305,7 +357,6 @@
   align-items: center;
   justify-content: space-between;
 }
-
 
 /* =================================
    NEW ITEM AUTHOR
@@ -330,7 +381,6 @@
 
   z-index: 5;
 }
-
 
 /* =================================
    COUNTDOWN TIMER
@@ -374,7 +424,6 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
-
 /* =================================
    NEW ITEM NFT IMAGE
 ================================= */
@@ -404,7 +453,6 @@
 .new-item-card:hover .nft-image {
   transform: scale(1.03);
 }
-
 
 /* =================================
    NEW ITEM INFORMATION
@@ -436,6 +484,24 @@
   text-align: left;
 }
 
+/* =================================
+   RESPONSIVE EXPLORE GRID
+================================= */
+
+/* Tablet */
+@media (max-width: 991px) {
+  .explore-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 575px) {
+  .explore-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
 
 /* =================================
    ETH + LIKES ROW
@@ -470,7 +536,6 @@
 
   white-space: nowrap;
 }
-
 
 /* =================================
    NEW ITEMS RESPONSIVE
@@ -517,7 +582,6 @@
   }
 }
 
-
 /* =================================
    FORCE NEW ITEM INFORMATION LEFT
 ================================= */
@@ -558,7 +622,6 @@
   text-align: right;
 }
 
-
 /* =================================
    MAIN CONTENT - NAVBAR SPACING
 ================================= */
@@ -566,7 +629,6 @@
 main {
   padding-top: 100px;
 }
-
 
 /* =================================
    SECTION TITLES
@@ -594,7 +656,6 @@ main {
   text-align: center;
 }
 
-
 /* =================================
    TOP SELLERS
 ================================= */
@@ -619,7 +680,6 @@ main {
   list-style: none;
 }
 
-
 /* =================================
    TOP SELLER ITEM
 ================================= */
@@ -635,7 +695,6 @@ main {
 
   padding: 0;
 }
-
 
 /* =================================
    TOP SELLER NUMBER
@@ -656,7 +715,6 @@ main {
 
   text-align: left;
 }
-
 
 /* =================================
    TOP SELLER AUTHOR IMAGE
@@ -683,7 +741,6 @@ main {
 
   border-radius: 50%;
 }
-
 
 /* =================================
    TOP SELLER INFORMATION
@@ -735,7 +792,6 @@ main {
   line-height: 1.2;
 }
 
-
 /* =================================
    TOP SELLER SKELETON
 ================================= */
@@ -779,7 +835,6 @@ main {
   animation: skeleton-loading 1.2s infinite ease-in-out;
 }
 
-
 /* =================================
    TOP SELLERS RESPONSIVE
 ================================= */
@@ -797,7 +852,6 @@ main {
 
   .top-sellers-list {
     grid-template-columns: repeat(2, 1fr);
-
     gap: 25px 20px;
   }
 
@@ -824,11 +878,15 @@ main {
 
   .top-sellers-list {
     grid-template-columns: 1fr;
-
     gap: 20px;
   }
 }
 
+.explore-load-more {
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
 
 /* =================================
    TOP SELLER LINKS
