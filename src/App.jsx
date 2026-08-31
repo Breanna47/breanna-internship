@@ -10,7 +10,6 @@ import Explore from "./pages/Explore";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 function PrevArrow({ onClick }) {
   return (
     <button
@@ -51,39 +50,9 @@ function LoadingSpinner() {
   );
 }
 
-
-
-    return {
-      hours: Math.floor(difference / (1000 * 60 * 60)),
-      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((difference % (1000 * 60)) / 1000),
-    };
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [expiryDate]);
-
-  return (
-    <div className="countdown-timer">
-      {String(timeLeft.hours).padStart(2, "0")}:
-      {String(timeLeft.minutes).padStart(2, "0")}:
-      {String(timeLeft.seconds).padStart(2, "0")}
-    </div>
-  );
-}
-
 function App() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
-
- 
 
   const [topSellers, setTopSellers] = useState([]);
   const [topSellersLoading, setTopSellersLoading] = useState(true);
@@ -102,8 +71,6 @@ function App() {
         setLoading(false);
       });
   }, []);
-
-
 
   useEffect(() => {
     axios
@@ -154,121 +121,110 @@ function App() {
     ],
   };
 
-const HomeContent = () => (
-  <>
-    <div className="section-title">Hot Collections</div>
+  const HomeContent = () => (
+    <>
+      <div className="section-title">Hot Collections</div>
 
-    <div className="collections-container">
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <Slider {...settings}>
-          {collections.map((collection) => (
-            <div key={collection.id}>
-              <div className="collection-card">
-                <div className="nft-image-wrapper">
+      <div className="collections-container">
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <Slider {...settings}>
+            {collections.map((collection) => (
+              <div key={collection.id}>
+                <div className="collection-card">
+                  <div className="nft-image-wrapper">
+                    <img
+                      className="nft-image"
+                      src={collection.nftImage}
+                      alt={collection.title}
+                    />
+                  </div>
+
                   <img
-                    className="nft-image"
-                    src={collection.nftImage}
-                    alt={collection.title}
+                    className="author-image"
+                    src={collection.authorImage}
+                    alt="Author"
                   />
+
+                  <h2>{collection.title}</h2>
                 </div>
-
-                <img
-                  className="author-image"
-                  src={collection.authorImage}
-                  alt="Author"
-                />
-
-                <h2>{collection.title}</h2>
               </div>
-            </div>
-          ))}
-        </Slider>
-      )}
-    </div>
+            ))}
+          </Slider>
+        )}
+      </div>
 
-   
+      <section className="top-sellers-section">
+        <div className="section-title">Top Sellers</div>
 
-    <section className="top-sellers-section">
-      <div className="section-title">Top Sellers</div>
+        <ol className="top-sellers-list">
+          {topSellersLoading
+            ? Array.from({ length: 12 }).map((_, index) => (
+                <li className="top-seller-item" key={index}>
+                  <span className="top-seller-number">{index + 1}</span>
 
-      <ol className="top-sellers-list">
-        {topSellersLoading
-          ? Array.from({ length: 12 }).map((_, index) => (
-              <li className="top-seller-item" key={index}>
-                <span className="top-seller-number">
-                  {index + 1}
-                </span>
+                  <div className="top-seller-image skeleton-seller-image"></div>
 
-                <div className="top-seller-image skeleton-seller-image"></div>
+                  <div className="top-seller-info">
+                    <div className="skeleton-seller-name"></div>
+                    <div className="skeleton-seller-price"></div>
+                  </div>
+                </li>
+              ))
+            : topSellers.slice(0, 12).map((seller, index) => (
+                <li className="top-seller-item" key={seller.id}>
+                  <span className="top-seller-number">{index + 1}</span>
 
-                <div className="top-seller-info">
-                  <div className="skeleton-seller-name"></div>
-                  <div className="skeleton-seller-price"></div>
-                </div>
-              </li>
-            ))
-          : topSellers.slice(0, 12).map((seller, index) => (
-              <li className="top-seller-item" key={seller.id}>
-                <span className="top-seller-number">
-                  {index + 1}
-                </span>
-
-                <Link
-                  to={`/author/${seller.authorId}`}
-                  className="top-seller-image-link"
-                >
-                  <img
-                    className="top-seller-image"
-                    src={seller.authorImage}
-                    alt={seller.authorName}
-                  />
-                </Link>
-
-                <div className="top-seller-info">
                   <Link
                     to={`/author/${seller.authorId}`}
-                    className="top-seller-name"
+                    className="top-seller-image-link"
                   >
-                    {seller.authorName}
+                    <img
+                      className="top-seller-image"
+                      src={seller.authorImage}
+                      alt={seller.authorName}
+                    />
                   </Link>
 
-                  <span className="top-seller-price">
-                    {seller.price} ETH
-                  </span>
-                </div>
-              </li>
-            ))}
-      </ol>
-    </section>
-  </>
-);
+                  <div className="top-seller-info">
+                    <Link
+                      to={`/author/${seller.authorId}`}
+                      className="top-seller-name"
+                    >
+                      {seller.authorName}
+                    </Link>
+
+                    <span className="top-seller-price">{seller.price} ETH</span>
+                  </div>
+                </li>
+              ))}
+        </ol>
+      </section>
+    </>
+  );
 
   return (
-  <Router>
-    <Nav />
+    <Router>
+      <Nav />
 
-    <main>
-      <Routes>
-        <Route path="/" element={<HomeContent />} />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomeContent />} />
 
-        <Route path="/explore" element={<Explore />} />
+          <Route path="/explore" element={<Explore />} />
 
-        <Route path="/author" element={<Author />} />
+          <Route path="/author" element={<Author />} />
 
-        <Route path="/author/:id" element={<Author />} />
+          <Route path="/author/:id" element={<Author />} />
 
-        <Route
-          path="/item-details"
-          element={<ItemDetails />}
-        />
-      </Routes>
-    </main>
+          <Route path="/item-details" element={<ItemDetails />} />
+        </Routes>
+      </main>
 
-    <Footer />
-  </Router>
-);
+      <Footer />
+    </Router>
+  );
 }
 
 export default App;
