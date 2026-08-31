@@ -103,12 +103,16 @@ function App() {
   const [topSellers, setTopSellers] = useState([]);
   const [topSellersLoading, setTopSellersLoading] = useState(true);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
+useEffect(() => {
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+}, []);
+
+useEffect(() => {
+  AOS.refresh();
+}, [collections, newItems, topSellers]);
 
   useEffect(() => {
     axios
