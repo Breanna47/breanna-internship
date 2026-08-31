@@ -1,9 +1,7 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-} from "react-router-dom";
+import Landing from "./components/home/Landing";
+import LandingIntro from "./components/home/LandingIntro";
+import BrowseByCategory from "./components/home/BrowseByCategory";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
@@ -72,17 +70,13 @@ function getTimeLeft(expiryDate) {
 
   return {
     hours: Math.floor(difference / (1000 * 60 * 60)),
-    minutes: Math.floor(
-      (difference % (1000 * 60 * 60)) / (1000 * 60),
-    ),
+    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
     seconds: Math.floor((difference % (1000 * 60)) / 1000),
   };
 }
 
 function CountdownTimer({ expiryDate }) {
-  const [timeLeft, setTimeLeft] = useState(() =>
-    getTimeLeft(expiryDate),
-  );
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(expiryDate));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -206,6 +200,14 @@ function App() {
   const HomeContent = () => (
     <>
       <div data-aos="fade-up">
+        <Landing />
+      </div>
+
+      <div data-aos="fade-up">
+        <LandingIntro />
+      </div>
+
+      <div data-aos="fade-up">
         <div className="section-title">Hot Collections</div>
 
         <div className="collections-container">
@@ -266,16 +268,12 @@ function App() {
                           />
 
                           <div className="countdown-wrapper">
-                            <CountdownTimer
-                              expiryDate={item.expiryDate}
-                            />
+                            <CountdownTimer expiryDate={item.expiryDate} />
                           </div>
                         </div>
 
                         <div className="nft-image-wrapper">
-                          <Link
-                            to={`/item-details/${item.nftId}`}
-                          >
+                          <Link to={`/item-details/${item.nftId}`}>
                             <img
                               className="nft-image"
                               src={item.nftImage}
@@ -285,20 +283,14 @@ function App() {
                         </div>
 
                         <div className="new-item-info">
-                          <Link
-                            to={`/item-details/${item.nftId}`}
-                          >
+                          <Link to={`/item-details/${item.nftId}`}>
                             <h2>{item.title}</h2>
                           </Link>
 
                           <div className="new-item-bottom-row">
-                            <p className="item-price">
-                              {item.price} ETH
-                            </p>
+                            <p className="item-price">{item.price} ETH</p>
 
-                            <p className="item-likes">
-                              ♥ {item.likes}
-                            </p>
+                            <p className="item-likes">♥ {item.likes}</p>
                           </div>
                         </div>
                       </div>
@@ -316,13 +308,8 @@ function App() {
           <ol className="top-sellers-list">
             {topSellersLoading
               ? Array.from({ length: 12 }).map((_, index) => (
-                  <li
-                    className="top-seller-item"
-                    key={index}
-                  >
-                    <span className="top-seller-number">
-                      {index + 1}
-                    </span>
+                  <li className="top-seller-item" key={index}>
+                    <span className="top-seller-number">{index + 1}</span>
 
                     <div className="top-seller-image skeleton-seller-image"></div>
 
@@ -332,44 +319,41 @@ function App() {
                     </div>
                   </li>
                 ))
-              : topSellers
-                  .slice(0, 12)
-                  .map((seller, index) => (
-                    <li
-                      className="top-seller-item"
-                      key={seller.id}
-                    >
-                      <span className="top-seller-number">
-                        {index + 1}
-                      </span>
+              : topSellers.slice(0, 12).map((seller, index) => (
+                  <li className="top-seller-item" key={seller.id}>
+                    <span className="top-seller-number">{index + 1}</span>
 
+                    <Link
+                      to={`/author/${seller.authorId}`}
+                      className="top-seller-image-link"
+                    >
+                      <img
+                        className="top-seller-image"
+                        src={seller.authorImage}
+                        alt={seller.authorName}
+                      />
+                    </Link>
+
+                    <div className="top-seller-info">
                       <Link
                         to={`/author/${seller.authorId}`}
-                        className="top-seller-image-link"
+                        className="top-seller-name"
                       >
-                        <img
-                          className="top-seller-image"
-                          src={seller.authorImage}
-                          alt={seller.authorName}
-                        />
+                        {seller.authorName}
                       </Link>
 
-                      <div className="top-seller-info">
-                        <Link
-                          to={`/author/${seller.authorId}`}
-                          className="top-seller-name"
-                        >
-                          {seller.authorName}
-                        </Link>
-
-                        <span className="top-seller-price">
-                          {seller.price} ETH
-                        </span>
-                      </div>
-                    </li>
-                  ))}
+                      <span className="top-seller-price">
+                        {seller.price} ETH
+                      </span>
+                    </div>
+                  </li>
+                ))}
           </ol>
         </section>
+      </div>
+
+      <div data-aos="fade-up">
+        <BrowseByCategory />
       </div>
     </>
   );
@@ -384,10 +368,7 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/author" element={<Author />} />
           <Route path="/author/:id" element={<Author />} />
-          <Route
-            path="/item-details/:nftId"
-            element={<ItemDetails />}
-          />
+          <Route path="/item-details/:nftId" element={<ItemDetails />} />
         </Routes>
       </main>
 
