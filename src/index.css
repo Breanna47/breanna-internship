@@ -11,18 +11,18 @@
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
 
-/* =================================
+/* 
    COLLECTIONS CONTAINER
-================================= */
+ */
 .collections-container {
   position: relative;
   width: 90%;
   margin: 50px auto;
 }
 
-/* =================================
+/* 
    COLLECTION CARD
-================================= */
+ */
 
 .collection-card {
   position: relative;
@@ -35,9 +35,9 @@
   background: white;
 }
 
-/* =================================
+/* 
    NFT IMAGE
-================================= */
+ */
 
 .nft-image-wrapper {
   position: relative;
@@ -58,9 +58,9 @@
   transform: scale(1.03);
 }
 
-/* =================================
+/* 
    GLOSSY SHIMMER
-================================= */
+ */
 
 .nft-image-wrapper::after {
   content: "";
@@ -95,9 +95,9 @@
   }
 }
 
-/* =================================
+/* 
    AUTHOR IMAGE
-================================= */
+ */
 
 .author-image {
   width: 80px;
@@ -111,9 +111,9 @@
   z-index: 2;
 }
 
-/* =================================
+/* 
    COLLECTION TITLE
-================================= */
+ */
 
 .collection-card h2 {
   font-size: 20px;
@@ -121,9 +121,9 @@
   margin: 10px 0;
 }
 
-/* =================================
+/* 
    CAROUSEL ARROWS
-================================= */
+ */
 
 .carousel-arrow {
   position: absolute;
@@ -160,9 +160,9 @@
   right: -20px;
 }
 
-/* =================================
+/* 
    PURPLE LOADING INDICATOR
-================================= */
+ */
 
 .loading-container {
   width: 100%;
@@ -207,9 +207,9 @@
   }
 }
 
-/* =================================
+/* 
    RESPONSIVE CAROUSEL
-================================= */
+ */
 
 @media (max-width: 480px) {
   .collections-container {
@@ -240,18 +240,18 @@
   }
 }
 
-/* =================================
+/* 
    EXPLORE PAGE
-================================= */
+ */
 
 .explore-filter {
   width: 100%;
   margin-bottom: 30px;
 }
 
-/* =================================
+/* 
    EXPLORE GRID
-================================= */
+ */
 
 .explore-grid {
   width: 100%;
@@ -266,9 +266,9 @@
   padding: 0;
 }
 
-/* =================================
+/* 
    EXPLORE CARD
-================================= */
+ */
 
 .explore-card {
   width: 100% !important;
@@ -305,9 +305,9 @@
   object-fit: cover;
 }
 
-/* =================================
+/* 
    NEW ITEMS SECTION
-================================= */
+ */
 
 .new-items-section {
   width: 100%;
@@ -315,9 +315,9 @@
   margin-bottom: 80px;
 }
 
-/* =================================
+/* 
    NEW ITEM CARD
-================================= */
+ */
 
 .new-item-card {
   position: relative;
@@ -337,9 +337,9 @@
   overflow: visible;
 }
 
-/* =================================
+/* 
    NEW ITEM TOP AREA
-================================= */
+ */
 
 .new-item-top {
   position: relative;
@@ -358,9 +358,9 @@
   justify-content: space-between;
 }
 
-/* =================================
+/* 
    NEW ITEM AUTHOR
-================================= */
+ */
 
 .new-item-author {
   position: absolute;
@@ -382,9 +382,9 @@
   z-index: 5;
 }
 
-/* =================================
+/* 
    COUNTDOWN TIMER
-================================= */
+ */
 
 .countdown-wrapper {
   position: relative;
@@ -424,9 +424,9 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
-/* =================================
+/* 
    NEW ITEM NFT IMAGE
-================================= */
+ */
 
 .new-item-card .nft-image-wrapper {
   position: relative;
@@ -454,9 +454,9 @@
   transform: scale(1.03);
 }
 
-/* =================================
+/* 
    NEW ITEM INFORMATION
-================================= */
+ */
 
 .new-item-info {
   width: 100%;
@@ -484,9 +484,9 @@
   text-align: left;
 }
 
-/* =================================
+/* 
    RESPONSIVE EXPLORE GRID
-================================= */
+ */
 
 /* Tablet */
 @media (max-width: 991px) {
@@ -503,9 +503,9 @@
   }
 }
 
-/* =================================
+/* 
    ETH + LIKES ROW
-================================= */
+ */
 
 .new-item-bottom-row {
   width: 100%;
@@ -537,9 +537,9 @@
   white-space: nowrap;
 }
 
-/* =================================
+/* 
    NEW ITEMS RESPONSIVE
-================================= */
+ */
 
 @media (max-width: 768px) {
   .new-item-top {
@@ -582,9 +582,9 @@
   }
 }
 
-/* =================================
+/* 
    FORCE NEW ITEM INFORMATION LEFT
-================================= */
+ */
 
 .new-item-card .new-item-info {
   text-align: left !important;
@@ -622,17 +622,17 @@
   text-align: right;
 }
 
-/* =================================
+/* 
    MAIN CONTENT - NAVBAR SPACING
-================================= */
+ */
 
 main {
   padding-top: 100px;
 }
 
-/* =================================
+/* 
    SECTION TITLES
-================================= */
+ */
 
 .section-title {
   display: block;
@@ -656,9 +656,9 @@ main {
   text-align: center;
 }
 
-/* =================================
+/* 
    TOP SELLERS
-================================= */
+ */
 
 .top-sellers-section {
   width: 90%;
@@ -680,9 +680,9 @@ main {
   list-style: none;
 }
 
-/* =================================
+/* 
    TOP SELLER ITEM
-================================= */
+ */
 
 .top-seller-item {
   display: flex;
@@ -696,9 +696,9 @@ main {
   padding: 0;
 }
 
-/* =================================
+/* 
    TOP SELLER NUMBER
-================================= */
+ */
 
 .top-seller-number {
   flex-shrink: 0;
@@ -716,9 +716,9 @@ main {
   text-align: left;
 }
 
-/* =================================
+/* 
    TOP SELLER AUTHOR IMAGE
-================================= */
+ */
 
 .top-seller-image-link {
   display: block;
@@ -742,9 +742,9 @@ main {
   border-radius: 50%;
 }
 
-/* =================================
+/* 
    TOP SELLER INFORMATION
-================================= */
+ */
 
 .top-seller-info {
   display: flex;
@@ -792,9 +792,9 @@ main {
   line-height: 1.2;
 }
 
-/* =================================
+/* 
    TOP SELLER SKELETON
-================================= */
+ */
 
 .skeleton-seller-image {
   flex-shrink: 0;
@@ -835,9 +835,9 @@ main {
   animation: skeleton-loading 1.2s infinite ease-in-out;
 }
 
-/* =================================
+/* 
    TOP SELLERS RESPONSIVE
-================================= */
+ */
 
 @media (max-width: 1024px) {
   .top-sellers-list {
@@ -888,9 +888,9 @@ main {
   text-align: center;
 }
 
-/* =================================
+/* 
    TOP SELLER LINKS
-================================= */
+ */
 
 .top-seller-image-link,
 .top-seller-name {
@@ -903,46 +903,100 @@ main {
   cursor: pointer;
 }
 
-/* =================================
+/* 
    EXPLORE BANNER
-================================= */
+ */
 
 .explore-banner {
   position: relative;
 
   width: 100%;
-  height: 145px;
+  height: 150px;
 
   margin-bottom: 45px;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 
   overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 50% -40px,
-      rgba(121, 92, 220, 0.35) 0,
-      rgba(121, 92, 220, 0.08) 110px,
-      transparent 190px
+      circle at 50% 0%,
+      rgba(115, 82, 220, 0.42) 0,
+      rgba(77, 54, 174, 0.22) 95px,
+      transparent 210px
     ),
-    linear-gradient(
-      110deg,
-      #15105f 0%,
-      #24106f 48%,
-      #17115d 100%
+    linear-gradient(110deg, #16115d 0%, #251171 50%, #18115f 100%);
+}
+
+.explore-banner::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 16% 25%,
+      rgba(255, 255, 255, 0.12) 0 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 22% 63%,
+      rgba(255, 255, 255, 0.1) 0 6px,
+      transparent 7px
+    ),
+    radial-gradient(
+      circle at 31% 38%,
+      rgba(255, 255, 255, 0.08) 0 4px,
+      transparent 5px
+    ),
+    radial-gradient(
+      circle at 67% 28%,
+      rgba(255, 255, 255, 0.08) 0 4px,
+      transparent 5px
+    ),
+    radial-gradient(
+      circle at 76% 58%,
+      rgba(255, 255, 255, 0.12) 0 6px,
+      transparent 7px
+    ),
+    radial-gradient(
+      circle at 84% 30%,
+      rgba(255, 255, 255, 0.09) 0 3px,
+      transparent 4px
+    );
+}
+
+.explore-banner-bubbles {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(255, 255, 255, 0.035) 0 55px,
+      transparent 56px
+    ),
+    radial-gradient(
+      circle at 42% 100%,
+      rgba(255, 255, 255, 0.025) 0 75px,
+      transparent 76px
     );
 }
 
 .explore-banner h1 {
   position: relative;
-  z-index: 3;
 
-  margin: -8px 0 0;
+  z-index: 2;
 
-  color: white;
+  margin: 0;
+
+  color: #ffffff;
 
   font-size: 32px;
   font-weight: 700;
@@ -951,55 +1005,9 @@ main {
   text-align: center;
 }
 
-.explore-banner-bubbles {
-  position: absolute;
-  inset: 0;
-
-  z-index: 1;
-
-  pointer-events: none;
-
-  background-image:
-    radial-gradient(
-      circle at 24% 28%,
-      rgba(255, 255, 255, 0.22) 0 3px,
-      transparent 4px
-    ),
-    radial-gradient(
-      circle at 28% 58%,
-      rgba(255, 255, 255, 0.18) 0 5px,
-      transparent 6px
-    ),
-    radial-gradient(
-      circle at 32% 82%,
-      rgba(255, 255, 255, 0.14) 0 4px,
-      transparent 5px
-    ),
-    radial-gradient(
-      circle at 76% 23%,
-      rgba(255, 255, 255, 0.16) 0 3px,
-      transparent 4px
-    ),
-    radial-gradient(
-      circle at 79% 60%,
-      rgba(255, 255, 255, 0.13) 0 5px,
-      transparent 6px
-    ),
-    radial-gradient(
-      circle at 73% 83%,
-      rgba(255, 255, 255, 0.12) 0 3px,
-      transparent 4px
-    ),
-    radial-gradient(
-      circle at 51% 14%,
-      rgba(255, 255, 255, 0.08) 0 42px,
-      transparent 43px
-    );
-}
-
 @media (max-width: 768px) {
   .explore-banner {
-    height: 120px;
+    height: 125px;
     margin-bottom: 35px;
   }
 
@@ -1010,7 +1018,7 @@ main {
 
 @media (max-width: 480px) {
   .explore-banner {
-    height: 100px;
+    height: 105px;
   }
 
   .explore-banner h1 {
@@ -1018,10 +1026,9 @@ main {
   }
 }
 
-
-/* =================================
+/* 
    ITEM DETAILS SKELETON
-================================= */
+ */
 
 .item-details-skeleton-image {
   width: 100%;
@@ -1110,9 +1117,9 @@ main {
   animation: item-details-pulse 1.3s ease-in-out infinite;
 }
 
-/* =================================
+/* 
    ITEM DETAILS NFT IMAGE
-================================= */
+ */
 
 .item-details-nft-image {
   display: block;
