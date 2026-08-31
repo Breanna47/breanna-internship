@@ -10,7 +10,7 @@ import Explore from "./pages/Explore";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
+const skeletonCards = Array.from({ length: 4 });
 function PrevArrow({ onClick }) {
   return (
     <button
@@ -51,8 +51,17 @@ function LoadingSpinner() {
   );
 }
 
+function CountdownTimer({ expiryDate }) {
+  const calculateTimeLeft = () => {
+    const difference = expiryDate - Date.now();
 
-
+    if (difference <= 0) {
+      return {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
     return {
       hours: Math.floor(difference / (1000 * 60 * 60)),
       minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
@@ -83,10 +92,11 @@ function App() {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
 
- 
+const [newItems, setNewItems] = useState([]);
+const [newItemsLoading, setNewItemsLoading] = useState(true);
 
-  const [topSellers, setTopSellers] = useState([]);
-  const [topSellersLoading, setTopSellersLoading] = useState(true);
+const [topSellers, setTopSellers] = useState([]);
+const [topSellersLoading, setTopSellersLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -103,22 +113,20 @@ function App() {
       });
   }, []);
 
-
-
   useEffect(() => {
     axios
       .get(
-        "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers",
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
       )
       .then((response) => {
-        console.log("Top Sellers:", response.data);
-        setTopSellers(response.data);
+        console.log("New Items:", response.data);
+        setNewItems(response.data);
       })
       .catch((error) => {
-        console.error("Top Sellers API error:", error);
+        console.error("New Items API error:", error);
       })
       .finally(() => {
-        setTopSellersLoading(false);
+        setNewItemsLoading(false);
       });
   }, []);
 
@@ -188,7 +196,63 @@ const HomeContent = () => (
       )}
     </div>
 
-   
+    <section className="new-items-section">
+      <div className="section-title">New Items</div>
+
+      <div className="collections-container">
+        <Slider {...settings}>
+          {newItemsLoading
+            ? skeletonCards.map((_, index) => (
+                <div key={index}>
+                  <div className="collection-card skeleton-card">
+                    <div className="skeleton-nft"></div>
+                    <div className="skeleton-author"></div>
+                    <div className="skeleton-title"></div>
+                  </div>
+                </div>
+              ))
+            : newItems.map((item) => (
+                <div key={item.id}>
+                  <div className="collection-card new-item-card">
+                    <div className="new-item-top">
+                      <img
+                        className="new-item-author"
+                        src={item.authorImage}
+                        alt="Author"
+                      />
+
+                      <div className="countdown-wrapper">
+                        <CountdownTimer expiryDate={item.expiryDate} />
+                      </div>
+                    </div>
+
+                    <div className="nft-image-wrapper">
+                      <img
+                        className="nft-image"
+                        src={item.nftImage}
+                        alt={item.title}
+                      />
+                    </div>
+
+                    <div className="new-item-info">
+                      <h2>{item.title}</h2>
+
+                      <div className="new-item-bottom-row">
+                        <p className="item-price">
+                          {item.price} ETH
+                        </p>
+
+                        <p className="item-likes">
+                          ♥ {item.likes}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+        </Slider>
+      </div>
+    </section>
 
     <section className="top-sellers-section">
       <div className="section-title">Top Sellers</div>
@@ -245,24 +309,17 @@ const HomeContent = () => (
   </>
 );
 
-  return (
+return (
   <Router>
     <Nav />
 
     <main>
       <Routes>
         <Route path="/" element={<HomeContent />} />
-
         <Route path="/explore" element={<Explore />} />
-
         <Route path="/author" element={<Author />} />
-
         <Route path="/author/:id" element={<Author />} />
-
-        <Route
-          path="/item-details"
-          element={<ItemDetails />}
-        />
+        <Route path="/item-details" element={<ItemDetails />} />
       </Routes>
     </main>
 
